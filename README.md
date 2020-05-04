@@ -25,31 +25,17 @@ You can find a detailed [project rubric, here](https://review.udacity.com/#!/rub
 
 ## Setup the Environment (Windows)
 
-* Create a virtualenv and activate it
-  
-```
-python -m venv .devops
-source .devops/Scripts/activate
-```
-
-### Installing Python Dependencies
-
+* Create a virtualenv `python -m venv .devops` and activate with `source .devops/Scripts/activate`
 * Install `make` with Chocolatey `choco install make`
 * Run `make install` to install the necessary dependencies
-
-### Installing Docker
-
 * [Install Docker Toolbox](https://docs.docker.com/toolbox/toolbox_install_windows/)
+* [Install Kubernetes](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+* [Install Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 
 ### Linting Dockerfile and Python code
 
 * Install `hadolint` with scoop `scoop install hadolint`
 * Run `make lint` to check Dockerfile using `hadolint` and `app.py` using `pylint` for any errors
-
-### Installing Kubernetes and Minikube
-
-* [Install Kubernetes](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-* [Install Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 
 ### Running `app.py`
 
@@ -59,32 +45,31 @@ source .devops/Scripts/activate
 
 ### Making Predictions
 
-With the application running, open another terminal window and run the bash script. 
+With the application running, open another terminal window and run the bash script.
 1. Standalone:  `./make_prediction_flask.sh`
-2. In Docker and Kubernetes:  `./make_prediction.sh <IP address>`
+2. Run in Docker:  `./make_prediction.sh <IP address>`
    * To find out the IP address of the virtual machine, run `docker-machine ls`
+3. Run in Kubernetes:  `./make_prediction.sh localhost`
 
 ### Docker Steps
 
 `Dockerfile` includes instructions to build the Docker image.
-* To build and run the container, run `run_docker.sh` - the application will be running on port `8000`
-* Whenever a prediction is made, the JSON and inference payloads, as well as the prediction value will be logged in the terminal window where the application is running
-* The `upload_docker.sh` is used to automate uploading of the Docker container to my Docker Hub account
+* To build and run the container, run `./run_docker.sh` - the application will be running on port `8000`
+* `./upload_docker.sh` is used to automate uploading of the Docker container to my Docker Hub account
 * To stop the application, run `docker stop <CONTAINER ID>`
-  * Container ID can be found from the `docker ps -a` command
+  * Container ID can be found from `docker ps -a`
 * To delete the application, run `docker rm <CONTAINER ID>`
 * To delete the Docker image, run `docker rmi <IMAGE ID>`
-  * Image ID can be found from the `docker images` command
+  * Image ID can be found from `docker images`
 
 ### Kubernetes Steps
 
-* Setup and Configure Docker locally (documented in [Installing Docker](#installing-docker))
-* Setup and Configure Kubernetes locally (documented in [Installing Kubernetes and Minikube](#installing-kubernetes-and-minikube))
-* Create Flask app in Container (documented in the [previous section](#docker-steps))
-* Run Minikube to set up and run a local Kubernetes cluster `minikube start` 
-* Run via kubectl: A bash script `run_kubenetes.sh` has been created to automate the process. T
-* Run `kubectl get pods` after a few minutes and check that the application container's status is `Running` - the application is running on port `8000` too
-* Whenever a prediction is made, the terminal logs that a connection is being handled
+* [Setup and Configure Docker locally](#installing-docker)
+* [Setup and Configure Kubernetes locally](#installing-kubernetes-and-minikube)
+* [Create Flask app in Container](#docker-steps)
+* Run `minikube start` to set up and run a local Kubernetes cluster 
+* Run via kubectl: `./run_kubenetes.sh`
+* Run `kubectl get pods --all-namespaces` after a few minutes to check if the pod's status is `Running` - the application runs on port `8000`
 * To save the cluster state, run `minikube stop`
 * To delete the cluster, run `minikube delete`
 
