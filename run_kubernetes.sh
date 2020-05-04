@@ -20,3 +20,6 @@ kubectl get pods --all-namespaces
 # Step 4:
 # Forward the container port to a host
 kubectl port-forward udacity-devops-project4 8000:80
+
+# Get logs
+kubectl logs udacity-devops-project4
