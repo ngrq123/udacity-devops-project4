@@ -10,6 +10,8 @@ dockerpath="ngrq123/udacity-devops-project4"
 # Step 2:  
 # Authenticate & tag
 echo "Docker ID and Image: $dockerpath"
+cat ./my_password.txt | docker login --username ngrq123 --password-stdin
+docker tag udacity-devops-project4 $dockerpath
 
 # Step 3:
 # Push image to a docker repository

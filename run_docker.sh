@@ -4,7 +4,7 @@
 
 # Step 1:
 # Build image and add a descriptive tag
-docker build --tag=ngrq123/udacity-devops-project4 .
+docker build --tag=udacity-devops-project4 .
 
 # Step 2: 
 # List docker images
@@ -12,4 +12,4 @@ docker image ls
 
 # Step 3: 
 # Run flask app
-docker run -p 8000:80 ngrq123/udacity-devops-project4
+docker run -p 8000:80 udacity-devops-project4
